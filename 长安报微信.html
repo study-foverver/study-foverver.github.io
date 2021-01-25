@@ -1,0 +1,414 @@
+
+<!-- saved from url=(0065)http://we.busykids.cn/epaper/2/2020-03-18/index_1.html#left-panel -->
+<html class="ui-mobile"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!--<base href="http://we.busykids.cn/epaper/2/2020-03-18/index_1.html">--><base href=".">
+  <title>西电学生报</title>
+  
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+  <meta name="format­detection" content="telephone=no">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <script src="./长安报微信_files/jquery-1.10.2.js"></script>
+  <script src="./长安报微信_files/jquery.mobile.min.js"></script>
+  <link rel="stylesheet" href="./长安报微信_files/jquery.mobile-1.4.5.min.css">
+  <script src="./长安报微信_files/jquery.ui.datepicker.js"></script>
+  <link rel="stylesheet" href="./长安报微信_files/jquery.mobile.datepicker.css">
+  <script src="./长安报微信_files/imageMapResizer.js"></script>
+  <script src="./长安报微信_files/swiper.js"></script>
+  <link href="./长安报微信_files/swiper.css" rel="stylesheet">
+  <script type="text/javascript" src="./长安报微信_files/date.json"></script> 
+  <script type="text/javascript">
+    var mySwiper;
+    var clickIndex;
+    var _curPage = 0;
+    var paper_id=3;
+    var pageList = ["1","2","3"];
+    var pageTitles = ["\u7b2c\u4e00\u7248","\u7b2c\u4e8c\u7248","\u7b2c\u4e09\u7248"];
+    var pageImages = ["images\/2\/2020\/03\/kM3MoyyxyyboxC2cj9zxCE2Ocu9qbT.png","images\/2\/2020\/03\/uPZZzYY1Ysf9uQ7FSrr6Yy6RM9rFyF.png","images\/2\/2020\/03\/VHHZzaWi3hiHAHLV9ozuiuD3oacZJu.png"];
+    var speciald=JSON.parse(data);
+    var nid = 1;
+    var date = "2020-03-18";
+    var pageIndex = 0;
+    var currentIndex = pageIndex;
+    var currentNodeID = nid;
+    var currentTitle = pageTitles[pageIndex];
+    var pageLoadStatus = new Array();
+    var imageResizeRate = 1.67;
+    var pageProtect = false;
+    var baseUrl="http://we.busykids.cn/epaper/2/";
+    console.log(baseUrl,'baseUrl');
+
+    for (var i = 0; i < pageList.length; i++) {
+      if (i == pageIndex) {
+        pageLoadStatus[i] = 1;
+      }
+      else {
+        pageLoadStatus[i] = 0;
+      }
+      
+    }
+    $(window).bind("pageshow", function () {
+    });
+    $(document).ready(function(e) {
+        $('map').imageMapResize();
+        $('#page-title').text(currentTitle);
+        if (pageIndex) {
+          pageProtect = true;
+        }
+        mySwiper = new Swiper ('.swiper-container', {
+             zoom: true,
+             initialSlide: pageIndex,
+             on:{slideChange: function(){
+                currentIndex = this.activeIndex;
+                currentNodeID = parseInt(pageList[currentIndex]);
+                currentTitle = pageTitles[currentIndex];
+                $('#page-title').text(currentTitle);
+          // 是否还有上一版 下一版
+            if (!pageLoadStatus[currentIndex]) {
+                  loadPage(currentIndex);
+                }               
+                var nextIndex = currentIndex + 1;
+                var prevIndex = currentIndex - 1;
+                if (nextIndex < pageLoadStatus.length && !pageLoadStatus[nextIndex]) {
+                  showPageImage(nextIndex);
+                }
+                if (prevIndex >= 0 && !pageLoadStatus[prevIndex]) {
+                  showPageImage(prevIndex);
+                }               
+              }
+            }
+        });
+        $( document ).on( "pagecreate", "#main-page", function() {
+            $( document ).on( "swipeleft", "#main-page", function( e ) {
+                if ( $( ".ui-page-active" ).jqmData( "panel" ) !== "open" ) {
+                    if ( e.type === "swiperight" ) {
+                        $( "#left-panel" ).panel( "open" );
+                    }
+                }
+            });
+        });
+
+   });
+    function slideTo(index){
+      if(_curPage>0){
+          $('#origin-img').removeClass('swiper-no-swiping');
+          mySwiper.removeSlide(0);
+          $('#normal').hide();
+          $("#zoom").show();
+       }
+      mySwiper.slideTo(Number(index)-1);
+    }
+
+// 加载版面数据
+    function loadPage(index) {
+      var loadNID = parseInt(pageList[index]);
+      $('#epaper-node-'+loadNID).load(baseUrl+date+'/pagecontent/'+loadNID,function(responseTxt,statusTxt,xhr){
+        if(statusTxt=="success") {
+          pageLoadStatus[index] = 1;
+          $.getScript("http://we.busykids.cn/addons/zh_paper/public/assets//js/imageMapResizer.js?v=20191029003",function(){ 
+            $('map').imageMapResize();
+          });
+          $('#epaper-node-'+loadNID+' img').on("error",loadNID,function(event){
+            $target = $('#epaper-node-'+loadNID+' img');
+            $target.attr('src',$target.attr('orisrc'));
+          });
+        }
+        if(statusTxt=="error") {
+            console.log("Error: "+xhr.status+": "+xhr.statusText);
+        }
+        });
+    }
+
+    function showPageImage(index) {
+      var targetNID = parseInt(pageList[index]);
+      $('#epaper-node-'+targetNID).empty().append('<div class="main-ed-map"><img src="'+pageImages[index]+'" width="100%"></div>');
+    }
+
+  </script>
+    <style>
+      .main-ed-map {
+        width: 100%;
+        margin: 10px auto 10px auto;
+      }
+
+      .swiper-container {
+          width: 100%;
+      }
+
+      .ui-header .ui-title {
+        margin: 0 10%;
+      }
+
+      .ui-datepicker-calendar td a {
+          padding: .3em .3em;
+      }
+
+      .ui-content {
+        padding: 0px;
+      }
+
+      .ui-datepicker-unselectable .ui-state-default {
+        padding: .3em .3em;
+      }
+
+      area:hover {
+        display: inline;
+      }
+      .specialdays a{
+      background: #E17009 !important;
+      color:#fff !important;
+
+          }
+    </style>  
+  </head>
+  <body data-cache="never" class="ui-mobile-viewport ui-overlay-a" style="">
+    <div data-role="page" id="main-page" data-url="main-page" data-cache="never" data-dom-cache="false" data-ajax="false" rel="external" tabindex="0" class="ui-page ui-page-theme-a ui-page-active" style="">
+      <div class="ui-panel-wrapper"><div data-role="header" data-theme="a" role="banner" class="ui-header ui-bar-a">
+        <h1 id="page-title" class="ui-title" role="heading" aria-level="1">第一版</h1>
+        <a href="http://we.busykids.cn/epaper/2/2020-03-18/index_1.html#left-panel" data-theme="a" data-shadow="false" class="ui-nodisc-icon ui-link ui-btn-left ui-btn ui-btn-a ui-corner-all" data-role="button" role="button">版次</a>
+        <a href="http://we.busykids.cn/epaper/2/2020-03-18/index_1.html#right-panel" data-theme="a" data-shadow="false" class="ui-nodisc-icon ui-btn-right ui-link ui-btn ui-btn-a ui-corner-all" data-role="button" role="button">往期</a>
+      </div><div role="main" class="ui-content" style="padding: 5px 10px;">
+         <div style="padding:5px;border:1px solid #cad0ce;">
+        <div class="swiper-container swiper-container-initialized swiper-container-horizontal">
+ <!--这一块修改图片、链接、相应区域-->
+            <div class="swiper-wrapper" id="origin-img" style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+                    <div class="swiper-slide swiper-zoom-container swiper-slide-active" id="epaper-node-1" node="1" style="width: 1231px;">
+                    <!--这里不知为何width定死，导致area坐标需要试探获得-->
+                    <div class="main-ed-map"> <img src="./头版.png" border="0" orisrc="https://cdn.busykids.cn/images/2/2020/03/kM3MoyyxyyboxC2cj9zxCE2Ocu9qbT.png" id="mappaper" usemap="#imgmap1" width="100%" onerror="">
+                      <map id="imgmap1" name="imgmap1">
+                        <area shape="rect" coords="0,0,1231,380" tooltip="西电峥嵘岁月稠" href="./我镇举行义务植树活动.html">
+                        <area shape="rect" coords="0,400,1231,1000" tooltip="萌新生活指南" href="./萌新生活指南.html">
+                      </map><div class="main-ed-side"></div></div>                </div>                             
+            </div>
+                 <div style="width: 50px;z-index:999;position: absolute;bottom:50px;right: 0px;">
+     <img style="width: 45px;height: 45px;float: right;" src="./长安报微信_files/scale_plus.png" id="zoom" class="zoom" onerror="">
+     <img style="width: 45px;height: 45px;float: right;display: none;" id="normal" src="./长安报微信_files/scale_min.png" class="zoom" onerror="">
+ </div>
+        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+        </div>
+        <div style="width:100%;position: fixed;max-height:60px;;bottom: 15px;font-size: 8px;color: #999;line-height: 16px;">
+          <span style="display:block;text-indent:2em;width:90%;margin:0 auto;">欲知长安事，欢迎持续关注《长安》报，每周逢周二、周五出版！左右滑动切换版面， 点击各版新闻内容观看新闻详细内容</span>
+        </div>
+      </div></div>
+      <!--这里修改版次跳转-->
+      <div data-role="panel" id="left-panel" data-theme="a" class="ui-panel ui-panel-position-left ui-panel-display-reveal ui-panel-closed ui-body-a ui-panel-animate">
+        <div class="ui-panel-inner"><ul data-role="listview" data-inset="true" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+                      <li data-icon="false" class="ui-first-child"><a href="" data-rel="close" onclick="slideTo(1)" class="ui-btn">第一版</a></li>
+                      <li data-icon="false"><a href="" data-rel="close" onclick="slideTo(2)" class="ui-btn">第二版</a></li>
+                      <li data-icon="false" class="ui-last-child"><a href="" data-rel="close" onclick="slideTo(3)" class="ui-btn">第三版</a></li>
+                      <li data-icon="false" class="ui-last-child"><a href="" data-rel="close" onclick="slideTo(4)" class="ui-btn">第四版</a></li>
+                  </ul></div>
+      </div>
+      <div data-role="panel" id="right-panel" data-theme="a" data-position="right" class="ui-panel ui-panel-position-right ui-panel-display-reveal ui-panel-closed ui-body-a ui-panel-animate">
+        <div class="ui-panel-inner"><div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="text" id="paperDate" data-role="date" data-inline="true" data-date-format="yy-mm-dd"></div><div id="dp1603549715804" class="hasDatepicker ui-shadow"><div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="display: block;"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-body-a ui-corner-top"><a class="ui-datepicker-prev ui-corner-all ui-btn ui-btn-icon-notext ui-btn-inline ui-icon-arrow-l ui-shadow" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all ui-btn ui-btn-icon-notext ui-btn-inline ui-icon-arrow-r ui-shadow" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a><div class="ui-datepicker-title"><span class="ui-datepicker-month">3月</span>&nbsp;<span class="ui-datepicker-year">2020</span></div></div><table class="ui-datepicker-calendar mobile-enhanced"><thead><tr><th class="ui-datepicker-week-end ui-bar-a"><span title="Sunday">日</span></th><th class="ui-bar-a"><span title="Monday">一</span></th><th class="ui-bar-a"><span title="Tuesday">二</span></th><th class="ui-bar-a"><span title="Wednesday">三</span></th><th class="ui-bar-a"><span title="Thursday">四</span></th><th class="ui-bar-a"><span title="Friday">五</span></th><th class="ui-datepicker-week-end ui-bar-a"><span title="Saturday">六</span></th></tr></thead><tbody><tr><td class="ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">1</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">2</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">3</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">4</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">5</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">6</span></td><td class="ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">7</span></td></tr><tr><td class="ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">8</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">9</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">10</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">11</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">12</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">13</span></td><td class="ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">14</span></td></tr><tr><td class="ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">15</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">16</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">17</span></td><td class="ui-datepicker-days-cell-over specialdays ui-datepicker-current-day ui-body-a" title="2020-03-18" data-handler="selectDay" data-event="click" data-month="2" data-year="2020"><a class="ui-state-default ui-state-active ui-state-hover ui-btn ui-btn-active" href="http://we.busykids.cn/epaper/2/2020-03-18/index_1.html#">18</a></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">19</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">20</span></td><td class="ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">21</span></td></tr><tr><td class="ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">22</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">23</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">24</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">25</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">26</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">27</span></td><td class="ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">28</span></td></tr><tr><td class="ui-datepicker-week-end ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">29</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">30</span></td><td class="ui-datepicker-unselectable ui-state-disabled  ui-body-a" style="opacity: 1;"><span class="ui-state-default">31</span></td><td class="ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled ui-body-a" style="opacity: 1;">&nbsp;</td><td class="ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled ui-body-a" style="opacity: 1;">&nbsp;</td><td class="ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled ui-body-a" style="opacity: 1;">&nbsp;</td><td class="ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled ui-body-a" style="opacity: 1;">&nbsp;</td></tr></tbody></table></div></div></div>
+      </div>
+    </div>
+
+  <script>$(function(){$('img').attr('onerror', '').on('error', function(){if (!$(this).data('check-src') && (this.src.indexOf('http://') > -1 || this.src.indexOf('https://') > -1)) {this.src = this.src.indexOf('http://we.busykids.cn/attachment/') == -1 ? this.src.replace('https://cdn.busykids.cn/', 'http://we.busykids.cn/attachment/') : this.src.replace('http://we.busykids.cn/attachment/', 'https://cdn.busykids.cn/');$(this).data('check-src', true);}});});</script>
+
+  <script type="text/javascript">
+    (function( $, undefined ) {
+        $.widget("mobile.date",{
+          options:{
+        defaultDate: "2020-03-18", // Used when field is blank: actual date,
+        appendText: "", // Display text following the input box, e.g. showing the format
+        buttonText: "...", // Text for trigger button
+        buttonImage: "", // URL for trigger button image
+        buttonImageOnly: false, // True if the image appears alone, false if it appears on a button
+        hideIfNoPrevNext: false, // True to hide next/previous month links
+        navigationAsDateFormat: false, // True if date formatting applied to prev/today/next links
+        gotoCurrent: false, // True if today link goes back to current selection instead
+        changeMonth: false, // True if month can be selected directly, false if only prev/next
+        changeYear: false, // True if year can be selected directly, false if only prev/next
+        yearRange: "c-10:c+10", // Range of years to display in drop-down,
+        showOtherMonths: false, // True to show dates in other months, false to leave blank
+        selectOtherMonths: false, // True to allow selection of dates in other months, false for unselectable
+        showWeek: false, // True to show week of the year, false to not show it
+        calculateWeek: this.iso8601Week, // How to calculate the week of the year,
+        shortYearCutoff: "+10", // Short year values < this are in the current century,
+        dateFormat: "yy-mm-dd",
+        minDate: "2013-4-1", // The earliest selectable date, or null for no limit
+        maxDate: "", // The latest selectable date, or null for no limit
+        beforeShowDay: null, // Function that takes a date and returns an array with
+        onSelect:  function(text,object){
+                var self = this;
+                location.href=baseUrl+text+"/index.html";
+                setTimeout( function(){
+                  if( !object.settings.inline ){
+                    $(object.input)
+                      .date( "addMobileStyle" );
+                  } else {
+                    $(object.settings.altField)
+                      .date( "addMobileStyle" );
+                  }
+                },0);
+              }, 
+        onChangeMonthYear: function(month,year,object){
+                var self = this;
+                setTimeout( function(){
+                  if( !object.settings.inline ){
+                    $(object.input)
+                      .date( "addMobileStyle" );
+                  } else {
+                    $(object.settings.altField)
+                      .date( "addMobileStyle" );
+                  }
+                },0);
+              },
+          beforeShow: function( element ){
+              var self = this;
+                setTimeout( function(){
+                    $(element)
+                      .data("mobileDate").addMobileStyle();
+                },0);
+            },
+            beforeShowDay: function( date ) {
+                  var m=date.getMonth()+1;
+          if(m<10) m='0'+m;
+                  var d=date.getDate();
+          if(d<10) d='0'+d;
+                  var y=date.getFullYear();
+                  var formatDate=y+"-"+m+"-"+d;//此处日期的格式化和speciald中的格式一样
+                  if($.inArray(formatDate,speciald)!=-1){
+                      return [true,"specialdays",formatDate];
+                  }
+                  else{
+                      return [false,'',''];
+                  }
+          },
+        numberOfMonths: 1, // Number of months to show at a time
+        showCurrentAtPos: 0, // The position in multipe months at which to show the current month (starting at 0)
+        stepMonths: 1, // Number of months to step back/forward
+        stepBigMonths: 12, // Number of months to step back/forward for the big links
+        altField: "", // Selector for an alternate field to store selected dates into
+        altFormat: "yy-mm-dd", // The date format to use for the alternate field
+        constrainInput: true, // The input is constrained by the current date format
+        showButtonPanel: false, // True to show button panel, false to not show it
+        autoSize: false, // True to size the input for the date format, false to leave as is
+        disabled: false, // The initial disabled state
+        dayNamesMin: ["日","一","二","三","四","五","六"],
+        monthNames: ["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"],
+        inline: false
+          },
+          _create:function(){
+
+            var calendar, interval,
+              that = this;
+            if( this.options.inline ){
+              this.options.altField = this.element;
+              calendar = $("<div>").datepicker(this.options);
+              this.element.parent().after(calendar);
+            } else {
+              this.element.datepicker( this.options );
+              calendar= this.element.datepicker( "widget" );
+            }
+
+            this.calendar = calendar;
+
+            this.baseWidget = ( !this.options.inline )? this.element: this.calendar;
+
+            this._on({
+              "change": function() {
+                if( this.options.inline ){
+                  this.calendar.datepicker( "setDate", this.element.val() );
+                }
+                this._delay( "addMobileStyle", 10 );
+              },
+              "input": function() {
+                interval = window.setInterval( function(){
+                  if( !that.calendar.hasClass( "mobile-enhanced" ) ){
+                    that.addMobileStyle();
+                  } else {
+                    clearInterval( interval );
+                  }
+                });
+              }
+            });
+            this.addMobileStyle();
+          },
+          setOption:function( key, value ){
+            this.calendar.datepicker("option",key,value);
+          },
+          getDate: function(){
+            return this.baseWidget.datepicker("getDate");
+          },
+          _destroy: function(){
+            return this.baseWidget.datepicker("destroy");
+          },
+          isDisabled: function(){
+            return this.baseWidget.datepicker("isDisabled");
+          },
+          refresh: function(){
+            return this.baseWidget.datepicker("refresh");
+          },
+          setDate: function( date ){
+            return this.baseWidget.datepicker("setDate", date );
+          },
+          widget:function(){
+           return this.element;
+          },
+          addMobileStyle: function(){
+              this.calendar.addClass("ui-shadow")
+              .find( ".ui-datepicker-calendar" ).addClass( "mobile-enhanced" ).end()
+              .find(".ui-datepicker-calendar a,.ui-datepicker-prev,.ui-datepicker-next").addClass("ui-btn").end()
+              .find(".ui-datepicker-prev").addClass("ui-btn-icon-notext ui-btn-inline ui-corner-all ui-icon-arrow-l ui-shadow").end()
+              .find(".ui-datepicker-next").addClass("ui-btn-icon-notext ui-btn-inline ui-corner-all ui-icon-arrow-r ui-shadow").end()
+              .find(".ui-datepicker-header").addClass("ui-body-a ui-corner-top").removeClass("ui-corner-all").end()
+              .find(".ui-datepicker-calendar th" ).addClass("ui-bar-a").end()
+              .find(".ui-datepicker-calendar td" ).addClass("ui-body-a").end()
+              .find(".ui-datepicker-calendar a.ui-state-active").addClass("ui-btn-active").end()
+              .find(".ui-datepicker-calendar a.ui-state-highlight").addClass("ui-btn-up-a").end().find(".ui-state-disabled").css("opacity","1");
+          }
+        });
+
+     })( jQuery );
+
+  </script>
+  <script type="text/javascript" src="./长安报微信_files/jweixin-1.2.0.js"></script>
+<script>
+  var url=encodeURIComponent(window.location.href.split('#')[0]);
+ $.ajax({
+    type : "get",
+    url : "../../.././index.php?i=2&c=entry&do=jssdk&m=zh_paper&url="+url,
+    success : function(data){
+      wx.config({
+      debug: false,
+      appId: data.appId,
+      timestamp: data.time,
+      nonceStr: data.nonceStr,
+      signature: data.singatura,
+      jsApiList: [
+          'checkJsApi',
+          'onMenuShareTimeline',
+          'onMenuShareAppMessage',
+          'onMenuShareQQ',
+          'onMenuShareWeibo',
+          'onMenuShareQZone'
+          ]
+      });
+
+    }
+  });
+wx.ready(function(){
+var shareData = {
+  title: '长安报微信20200318',
+  desc: '2010好的哈火大就是的手机号发动机撒娇娇范德萨就好大师傅回到家三',
+  link: window.location.href,
+  imgUrl: 'https://cdn.busykids.cn/images/2/2020/03/MO6c61PsO9XWPp35C6Mc1w20PO2iP9.png'
+  };
+  wx.onMenuShareAppMessage(shareData);
+  wx.onMenuShareTimeline(shareData);
+  $('.zoom').click(function () {
+    var currentUrl=$('.swiper-slide-active img').attr('src');
+    var urls = [];
+    urls.push(currentUrl);
+     wx.previewImage({
+        current: currentUrl, // 当前显示图片的http链接
+        urls: [currentUrl] // 需要预览的图片http链接列表
+    });
+  })
+})
+</script>
+
+
+<script>var we7CommonForModule = document.createElement("script");we7CommonForModule.src = '//cdn.w7.cc/we7/w7windowside.js?v=201912090001';
+</script><div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon-loading"></span><h1>loading</h1></div><div class="ui-panel-dismiss"></div><div class="ui-panel-dismiss"></div><div id="ui-datepicker-div" class="ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"></div></body></html>
