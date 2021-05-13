@@ -1,0 +1,188 @@
+<html class="ui-mobile">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <base href=".">
+    <title>西电学生报</title>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0,user-scalable=no">
+    <meta name="format­detection" content="telephone=no">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <script src="../cfg/jquery-1.10.2.js"></script>
+    <script src="../cfg/jquery.mobile.min.js"></script>
+    <link rel="stylesheet" href="../cfg/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="../cfg/jquery.mobile.datepicker.css">
+    <script src="../cfg/imageMapResizer.js"></script>
+    <script src="../cfg/swiper.js"></script>
+    <link href="../cfg/swiper.css" rel="stylesheet">
+    <script type="text/javascript" src="../cfg/date.json"></script>
+    <!--这句不能删除-->
+    <script type="text/javascript">
+        var mySwiper;
+        var clickIndex;
+        var _curPage = 0;
+        var paper_id = 3;
+        var pageList = ["1", "2", "3"];
+        var pageTitles = ["\u7b2c\u4e00\u7248", "\u7b2c\u4e8c\u7248", "\u7b2c\u4e09\u7248"];
+        var pageImages = ["images\/2\/2020\/03\/kM3MoyyxyyboxC2cj9zxCE2Ocu9qbT.png", "images\/2\/2020\/03\/uPZZzYY1Ysf9uQ7FSrr6Yy6RM9rFyF.png", "images\/2\/2020\/03\/VHHZzaWi3hiHAHLV9ozuiuD3oacZJu.png"];
+        var speciald = JSON.parse(data);
+        var nid = 1;
+        var date = "2020-03-18";
+        var pageIndex = 0;
+        var currentIndex = pageIndex;
+        var currentNodeID = nid;
+        var currentTitle = pageTitles[pageIndex];
+        var pageLoadStatus = new Array();
+        var imageResizeRate = 1.67;
+        var pageProtect = false;
+        var baseUrl = "http://we.busykids.cn/epaper/2/";
+        console.log(baseUrl, 'baseUrl');
+
+        for (var i = 0; i < pageList.length; i++) {
+            if (i == pageIndex) {
+                pageLoadStatus[i] = 1;
+            } else {
+                pageLoadStatus[i] = 0;
+            }
+
+        }
+        $(window).bind("pageshow", function() {});
+        $(document).ready(function(e) {
+            $('map').imageMapResize();
+            $('#page-title').text(currentTitle);
+            if (pageIndex) {
+                pageProtect = true;
+            }
+            mySwiper = new Swiper('.swiper-container', {
+                zoom: true,
+                initialSlide: pageIndex,
+                on: {
+                    slideChange: function() {
+                        currentIndex = this.activeIndex;
+                        currentNodeID = parseInt(pageList[currentIndex]);
+                        currentTitle = pageTitles[currentIndex];
+                        $('#page-title').text(currentTitle);
+                        // 是否还有上一版 下一版
+                        if (!pageLoadStatus[currentIndex]) {
+                            loadPage(currentIndex);
+                        }
+                        var nextIndex = currentIndex + 1;
+                        var prevIndex = currentIndex - 1;
+                        if (nextIndex < pageLoadStatus.length && !pageLoadStatus[nextIndex]) {
+                            showPageImage(nextIndex);
+                        }
+                        if (prevIndex >= 0 && !pageLoadStatus[prevIndex]) {
+                            showPageImage(prevIndex);
+                        }
+                    }
+                }
+            });
+            $(document).on("pagecreate", "#main-page", function() {    
+                $(document).on("swipeleft", "#main-page", function(e) {        
+                    if ($(".ui-page-active").jqmData("panel") !== "open") {            
+                        if (e.type === "swiperight") {                
+                            $("#left-panel").panel("open");            
+                        }        
+                    }    
+                });
+            });
+        });
+    </script>
+    <style>
+        .main-ed-map {
+            width: 100%;
+            margin: 10px auto 10px auto;
+        }
+        
+        .swiper-container {
+            width: 100%;
+        }
+        
+        .ui-header .ui-title {
+            margin: 0 10%;
+        }
+        
+        .ui-datepicker-calendar td a {
+            padding: .3em .3em;
+        }
+        
+        .ui-content {
+            padding: 0px;
+        }
+        
+        .ui-datepicker-unselectable .ui-state-default {
+            padding: .3em .3em;
+        }
+        
+        area:hover {
+            display: inline;
+        }
+        
+        .specialdays a {
+            background: #E17009 !important;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body data-cache="never" class="ui-mobile-viewport ui-overlay-a">
+    <div data-role="page" id="main-page" data-url="main-page" data-cache="never" data-dom-cache="false" data-ajax="false" rel="external" tabindex="0" class="ui-page ui-page-theme-a ui-page-active">
+        <div class="ui-panel-wrapper">
+            <div data-role="header" data-theme="a" role="banner" class="ui-header ui-bar-a">
+                <h1 class="ui-title" role="heading" aria-level="1">第八版</h1>
+                <!--下面两个链接连着版次和往期信息-->
+                <a href="#left-panel" data-theme="a" data-shadow="false" class="ui-nodisc-icon ui-link ui-btn-left ui-btn ui-btn-a ui-corner-all" data-role="button" role="button">版次</a>
+                <a href="#right-panel" data-theme="a" data-shadow="false" class="ui-nodisc-icon ui-btn-right ui-link ui-btn ui-btn-a ui-corner-all" data-role="button" role="button">往期</a>
+            </div>
+            <div role="main" class="ui-content" style="padding: 5px 10px;">
+                <div style="padding:5px;border:1px solid #cad0ce;">
+                    <div class="swiper-container swiper-container-initialized swiper-container-horizontal">
+                        <!--这一块修改图片、链接、相应区域-->
+                        <div class="swiper-wrapper" id="origin-img" style="transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
+                            <div class="swiper-slide swiper-zoom-container swiper-slide-active" id="epaper-node-1" node="1" style="width: 1231px;">
+                                <!--这里不知为何width定死，导致area坐标需要试探获得-->
+                                <div class="main-ed-map"> <img src="../报纸303期/B4/B4.jpg" border="0" id="mappaper" usemap="#imgmap1" width="100%" onerror="">
+                                    <map id="imgmap1" name="imgmap1">
+                          <area shape="rect" coords="0,0,1231,1000" tooltip="满城风雨之徐大少" href="./我自天涯来.html">
+                        </map>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width: 50px;z-index:999;position: absolute;bottom:50px;right: 0px;">
+                            <img style="width: 45px;height: 45px;float: right;" src="../cfg/scale_plus.png" id="zoom" class="zoom" onerror="">
+                            <img style="width: 45px;height: 45px;float: right;display: none;" id="normal" src="../cfg/scale_min.png" class="zoom" onerror="">
+                        </div>
+                        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+                </div>
+                <div style="width:100%;position:static;max-height:80px;;bottom: 20px;font-size: 20px;color: #999;text-align:center;line-height: 20px;">
+                    <p style="position:static; width: 100px">欢迎阅读西电学生报~</p>
+                    <p style="position:static; width: 100px">点击文章区域可查看详细内容~</p>
+                </div>
+            </div>
+        </div>
+        <!--这里修改版次跳转-->
+        <div data-role="panel" id="left-panel" data-theme="a" class="ui-panel ui-panel-position-left ui-panel-display-reveal ui-panel-closed ui-body-a ui-panel-animate">
+            <div class="ui-panel-inner">
+                <ul data-role="listview" data-inset="true" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+                    <li data-icon="false" class="ui-first-child"><a href="./index.html" data-rel="close" onclick="slideTo(1)" class="ui-btn">头版</a></li>
+                    <li data-icon="false" class="ui-first-child"><a href="./A2.html" data-rel="close" onclick="slideTo(2)" class="ui-btn">第二版</a></li>
+                    <li data-icon="false" class="ui-last-child"><a href="./A3.html" data-rel="close" onclick="slideTo(3)" class="ui-btn">第三版</a></li>
+                    <li data-icon="false" class="ui-last-child"><a href="./A4.html" data-rel="close" onclick="slideTo(4)" class="ui-btn">第四版</a></li>
+                    <li data-icon="false" class="ui-last-child"><a href="./B1.html" data-rel="close" onclick="slideTo(5)" class="ui-btn">第五版</a></li>
+                    <li data-icon="false" class="ui-last-child"><a href="./B2.html" data-rel="close" onclick="slideTo(6)" class="ui-btn">第六版</a></li>
+                    <li data-icon="false" class="ui-last-child"><a href="./B3.html" data-rel="close" onclick="slideTo(7)" class="ui-btn">第七版</a></li>
+                    <li data-icon="false" class="ui-last-child"><a href="./B4.html" data-rel="close" onclick="slideTo(8)" class="ui-btn">第八版</a></li>
+            </div>
+        </div>
+        <!--上面是版次跳转left，下面是往期跳转right-->
+        <div data-role="panel" id="right-panel" data-theme="a" data-position="right" class="ui-panel ui-panel-position-right ui-panel-display-reveal ui-panel-closed ui-body-a ui-panel-animate">
+            <div class="ui-panel-inner">
+                <ul data-role="listview" data-inset="true" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+                    <li data-icon="false" class="ui-first-child"><a href="../报纸302期_html/index.html" data-rel="close" onclick="slideTo(1)" class="ui-btn">第302期</a></li>
+                </ul>
+                <ul data-role="listview" data-inset="true" class="ui-listview ui-listview-inset ui-corner-all ui-shadow">
+                    <li data-icon="false" class="ui-first-child"><a href="../报纸303期_html/index.html" data-rel="close" onclick="slideTo(2)" class="ui-btn">第303期</a></li>
+                </ul>
+            </div>
+        </div>
