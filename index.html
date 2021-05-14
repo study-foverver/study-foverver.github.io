@@ -72,13 +72,13 @@
                     }
                 }
             });
-            $(document).on("pagecreate", "#main-page", function() {    
-                $(document).on("swipeleft", "#main-page", function(e) {        
-                    if ($(".ui-page-active").jqmData("panel") !== "open") {            
-                        if (e.type === "swiperight") {                
-                            $("#left-panel").panel("open");            
-                        }        
-                    }    
+            $(document).on("pagecreate", "#main-page", function() {
+                $(document).on("swipeleft", "#main-page", function(e) {
+                    if ($(".ui-page-active").jqmData("panel") !== "open") {
+                        if (e.type === "swiperight") {
+                            $("#left-panel").panel("open");
+                        }
+                    }
                 });
             });
         });
@@ -152,14 +152,15 @@
                             </div>
                         </div>
                         <div style="width: 50px;z-index:999;position: absolute;bottom:50px;right: 0px;">
-                            <img style="width: 45px;height: 45px;float: right;" src="../cfg/scale_plus.png" id="zoom" class="zoom" onerror="">
-                            <img style="width: 45px;height: 45px;float: right;display: none;" id="normal" src="../cfg/scale_min.png" class="zoom" onerror="">
+                            <img style="width: 45px;height: 45px;float: right;" src="./cfg/scale_plus.png" id="zoom" class="zoom" onerror="">
+                            <img style="width: 45px;height: 45px;float: right;display: none;" id="normal" src="./cfg/scale_min.png" class="zoom" onerror="">
                         </div>
-                        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+                        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                    </div>
                 </div>
                 <div style="width:100%;position:static;max-height:80px;;bottom: 20px;font-size: 20px;color: #999;text-align:center;line-height: 20px;">
-                    <p style="position:static; width: 100px">欢迎阅读西电学生报~</p>
-                    <p style="position:static; width: 100px">点击文章区域可查看详细内容~</p>
+                    <p style="position:static; width: 100px">欢迎阅读西电学生报~</p>
+                    <p style="position:static; width: 100px">点击文章区域可查看详细内容~</p>
                 </div>
             </div>
         </div>
